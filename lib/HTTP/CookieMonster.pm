@@ -32,13 +32,7 @@ sub _build_all_cookies {
 
 }
 
-sub cookie_names {
-    my $self = shift;
-    my @names = map { $_->key } @{ $self->all_cookies };
-    return \@names;
-}
-
-sub get_cookie {
+sub feeling_lucky {
 
     my $self = shift;
     my $name = shift;
@@ -55,10 +49,8 @@ sub set_cookie {
     my $cookie = shift;
 
     if ( !$cookie->$_isa( 'HTTP::CookieMonster::Cookie' ) ) {
-        $cookie = $self->get_cookie( $cookie );
+        croak "$cookie is not a HTTP::CookieMonster::Cookie object";
     }
-
-    croak "Could not find a cookie with key $cookie" if !$cookie;
 
     return $self->cookie_jar->set_cookie(
         $cookie->version,   $cookie->key,    $cookie->val,
@@ -106,17 +98,42 @@ sub _check_cookies {
     $mech->get( 'http://www.nytimes.com' );
 
     my $monster = HTTP::CookieMonster->new( cookie_jar => $mech->cookie_jar );
-    my $cookie = $monster->get_cookie('RMID');
+    my $cookie = $monster->feeling_lucky('RMID');
     print $cookie->val;
 
 =head1 DESCRIPTION
 
 =head2 cookie_jar
 
-=head2 cookie_names
+=head2 all_cookies
 
-=head2 get_cookie( $name )
+=head2 feeling_lucky( $name )
 
-=head2 update_cookie( $name )
+=head2 set_cookie( $name|HTTP::CookieMonster::Cookie )
+
+Sets the cookie (updates the cookie jar).  Accepts either the name (key) of a
+cookie or an HTTP::CookieMonster::Cooke object.
+
+    my $monster = HTTP::CookieMonster->new( cookie_jar => $mech->cookie_jar );
+    my $s = $monster->feeling_lucky('session');
+    $s->val('random_string');
+
+    $monster->set_cookie( 'session');
+    # or by cookie object
+    $monster->set_cookie( $s );
+
+    # You can add an entirely new cookie to the jar via this method
+    use HTTP::CookieMonster::Cookie;
+    my $cookie = HTTP::CookieMonster::Cookie->new(
+        key       => 'cookie-name',
+        val       => 'cookie-val',
+        path      => '/',
+        domain    => '.somedomain.org',
+        path_spec => 1,
+        secure    => 0,
+        expires   => 1376081877
+    );
+
+    $monster->set_cookie( $cookie );
 
 =cut

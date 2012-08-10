@@ -16,16 +16,30 @@ $mech->get( 'http://www.nytimes.com' );
 $monster = HTTP::CookieMonster->new( cookie_jar => $mech->cookie_jar );
 ok( $monster,              "got a monster" );
 ok( $monster->all_cookies, "all cookies" );
-ok( $monster->get_cookie('RMID'), "got a single cookie" );
+ok( $monster->feeling_lucky('RMID'), "got a single cookie" );
 
-my @names = $monster->cookie_names;
-ok @names, "got cookie names";
-
-my $rmid = $monster->get_cookie('RMID');
+my $rmid = $monster->feeling_lucky('RMID');
 $rmid->val( 'random' );
-is $monster->set_cookie('RMID'), 1, "can set cookie by name";
+is $monster->set_cookie($rmid), 1, "can set cookie";
 
-$rmid->val('even more random');
-is $monster->set_cookie($rmid), 1, "can set cookie by object";
+# try adding a new cookie to the jar
+
+my $cookie = HTTP::CookieMonster::Cookie->new(
+    version   => 0,
+    key       => 'foo',
+    val       => 'bar',
+    path      => '/',
+    domain    => '.metacpan.org',
+    port      => 80,
+    path_spec => 1,
+    secure    => 1,
+    expires   => 1376081877,
+    discard   => undef,
+    hash      => {},
+);
+
+$monster->set_cookie( $cookie );
+
+diag p $monster->cookie_jar;
 
 done_testing();
