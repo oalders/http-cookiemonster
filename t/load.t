@@ -1,5 +1,8 @@
 #!/usr/bin/env perl
 
+use strict;
+use warnings;
+
 use Test::More;
 
 use Data::Printer;
@@ -39,7 +42,5 @@ my $cookie = HTTP::CookieMonster::Cookie->new(
 );
 
 $monster->set_cookie( $cookie );
-
-diag p $monster->cookie_jar;
 
 done_testing();

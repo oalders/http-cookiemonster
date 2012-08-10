@@ -8,6 +8,7 @@ use Carp;
 use Data::Printer;
 use HTTP::CookieMonster::Cookie;
 use Safe::Isa;
+use Scalar::Util qw( reftype );
 
 my @_cookies = ();
 
@@ -21,7 +22,10 @@ has 'cookie_jar' => (
 
 );
 
-has 'all_cookies' => ( is => 'lazy', isa => 'ArrayRef' );
+has 'all_cookies' => (
+    is  => 'lazy',
+    isa => sub { die "ArrayRef required" if reftype $_[0] ne 'ARRAY' }
+);
 
 sub _build_all_cookies {
 
@@ -62,10 +66,8 @@ sub set_cookie {
 }
 
 sub _check_cookies {
-    my @args = @_;
-    print "starting to check cookies\n";
 
-    #p @args;
+    my @args = @_;
 
     push @_cookies,
         HTTP::CookieMonster::Cookie->new(
@@ -89,6 +91,7 @@ sub _check_cookies {
 
 # ABSTRACT: Easily Read and Update your Jar of HTTP::Cookies
 #
+
 =pod
 
 =head1 SYNOPSIS
@@ -105,23 +108,39 @@ sub _check_cookies {
 
 =head1 DESCRIPTION
 
+=head2 new
+
+new() takes just one required parameter, which is cookie_jar, a valid
+L<HTTP::Cookies> object.  See below for sample code.
+
+    my $monster = HTTP::CookieMonster->new( cookie_jar => $mech->cookie_jar );
+
 =head2 cookie_jar
+
+An L<HTTP::Cookies> object. You would typically get this via:
+
+    my $ua = LWP::UserAgent->new;
+    $ua->cookie_jar
+
+    # or via WWW::Mechanize (which inherits from LWP::UserAgent)
+
+    my $mech = WWW::Mechanize->new;
+    $mech->cookie_jar;
 
 =head2 all_cookies
 
-=head2 feeling_lucky( $name )
+Returns an ArrayRef of all cookies in the cookie jar, represented as
+L<HTTP::CookieMonster::Cookie> objects.
 
-=head2 set_cookie( $name|HTTP::CookieMonster::Cookie )
+=head2 set_cookie( $cookie )
 
-Sets the cookie (updates the cookie jar).  Accepts either the name (key) of a
-cookie or an HTTP::CookieMonster::Cooke object.
+Sets the cookie (updates the cookie jar).  Requires a
+L<HTTP::CookieMonster::Cookie> object.
 
     my $monster = HTTP::CookieMonster->new( cookie_jar => $mech->cookie_jar );
     my $s = $monster->feeling_lucky('session');
     $s->val('random_string');
 
-    $monster->set_cookie( 'session');
-    # or by cookie object
     $monster->set_cookie( $s );
 
     # You can add an entirely new cookie to the jar via this method
@@ -137,5 +156,28 @@ cookie or an HTTP::CookieMonster::Cooke object.
     );
 
     $monster->set_cookie( $cookie );
+
+=head2 feeling_lucky( $name )
+
+Be aware that this method may surprise you by what it returns.  feeling_lucky()
+iterates over the cookies in all_cookies() and returns the first cookie which
+exactly matches the name supplied.  In many cases this will be exactly what you
+want, but that won't always be the case.  If you are spidering multiple web
+sites with the same UserAgent object, be aware that you'll likely have cookies
+from multiple sites in your cookie jar.  In this case asking for
+feeling_lucky('session') may not return the cookie which you were expecting.
+
+However, if you're running some tests against your own site or just crawling
+one specific site and you are confident that only one cookie with this name
+exists, feeling_lucky will save you a few lines of code.  It's mostly meant as
+a quick hack for when you want to check a cookie in a hurry and have a
+reasonable amount of confidence that there are no duplicate cookies in the jar
+with this name.
+
+    my $mech = WWW::Mechanize->new;
+    $mech->get( 'http://www.nytimes.com' );
+
+    $monster = HTTP::CookieMonster->new( cookie_jar => $mech->cookie_jar );
+    my $rmid = $monster->feeling_lucky('RMID');
 
 =cut
