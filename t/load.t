@@ -16,8 +16,12 @@ $mech->get( 'http://www.nytimes.com' );
 $monster = HTTP::CookieMonster->new( cookie_jar => $mech->cookie_jar );
 ok( $monster,              "got a monster" );
 ok( $monster->all_cookies, "all cookies" );
-ok( $monster->cookie('RMID'), "got a single cookie" );
+ok( $monster->get_cookie('RMID'), "got a single cookie" );
 
-#diag p $mech->cookie_jar;
+my @names = $monster->cookie_names;
+ok @names, "got cookie names";
+
+$monster->get_cookie('RMID')->val('random');
+$monster->update_cookie('RMID');
 
 done_testing();
