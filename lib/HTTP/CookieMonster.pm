@@ -4,6 +4,7 @@ use warnings;
 package HTTP::CookieMonster;
 
 use Moo;
+use Carp;
 use Data::Printer;
 use HTTP::CookieMonster::Cookie;
 use Safe::Isa;
@@ -27,8 +28,6 @@ sub _build_all_cookies {
     my $self = shift;
     $self->cookie_jar->scan( \&_check_cookies );
 
-    #my @cookies = @_cookies;
-    #@_cookies = ();
     return \@_cookies;
 
 }
@@ -36,7 +35,7 @@ sub _build_all_cookies {
 sub cookie_names {
     my $self = shift;
     my @names = map { $_->key } @{ $self->all_cookies };
-    return @names;
+    return \@names;
 }
 
 sub get_cookie {
@@ -50,17 +49,23 @@ sub get_cookie {
 
 }
 
-sub update_cookie {
+sub set_cookie {
 
     my $self   = shift;
-    my $cookie = $self->get_cookie( shift );
+    my $cookie = shift;
+
+    if ( !$cookie->$_isa( 'HTTP::CookieMonster::Cookie' ) ) {
+        $cookie = $self->get_cookie( $cookie );
+    }
+
+    croak "Could not find a cookie with key $cookie" if !$cookie;
 
     return $self->cookie_jar->set_cookie(
         $cookie->version,   $cookie->key,    $cookie->val,
         $cookie->path,      $cookie->domain, $cookie->port,
         $cookie->path_spec, $cookie->secure, $cookie->expires,
         $cookie->discard,   $cookie->hash
-    );
+    ) ? 1 : 0;
 
 }
 

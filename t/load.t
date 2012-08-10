@@ -21,7 +21,11 @@ ok( $monster->get_cookie('RMID'), "got a single cookie" );
 my @names = $monster->cookie_names;
 ok @names, "got cookie names";
 
-$monster->get_cookie('RMID')->val('random');
-$monster->update_cookie('RMID');
+my $rmid = $monster->get_cookie('RMID');
+$rmid->val( 'random' );
+is $monster->set_cookie('RMID'), 1, "can set cookie by name";
+
+$rmid->val('even more random');
+is $monster->set_cookie($rmid), 1, "can set cookie by object";
 
 done_testing();
