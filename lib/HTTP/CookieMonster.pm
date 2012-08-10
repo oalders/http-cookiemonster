@@ -87,6 +87,8 @@ sub _check_cookies {
 
 1;
 
+# ABSTRACT: Easily Read and Update your Jar of HTTP::Cookies
+#
 =pod
 
 =head1 SYNOPSIS

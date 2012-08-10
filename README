@@ -1,0 +1,56 @@
+NAME
+    HTTP::CookieMonster - Easily Read and Update your Jar of HTTP::Cookies
+
+VERSION
+    version 0.01
+
+SYNOPSIS
+        use HTTP::CookieMonster;
+        use WWW::Mechanize;
+
+        my $mech = WWW::Mechanize->new;
+        $mech->get( 'http://www.nytimes.com' );
+
+        my $monster = HTTP::CookieMonster->new( cookie_jar => $mech->cookie_jar );
+        my $cookie = $monster->feeling_lucky('RMID');
+        print $cookie->val;
+
+DESCRIPTION
+  cookie_jar
+  all_cookies
+  feeling_lucky( $name )
+  set_cookie( $name|HTTP::CookieMonster::Cookie )
+    Sets the cookie (updates the cookie jar). Accepts either the name (key)
+    of a cookie or an HTTP::CookieMonster::Cooke object.
+
+        my $monster = HTTP::CookieMonster->new( cookie_jar => $mech->cookie_jar );
+        my $s = $monster->feeling_lucky('session');
+        $s->val('random_string');
+
+        $monster->set_cookie( 'session');
+        # or by cookie object
+        $monster->set_cookie( $s );
+
+        # You can add an entirely new cookie to the jar via this method
+        use HTTP::CookieMonster::Cookie;
+        my $cookie = HTTP::CookieMonster::Cookie->new(
+            key       => 'cookie-name',
+            val       => 'cookie-val',
+            path      => '/',
+            domain    => '.somedomain.org',
+            path_spec => 1,
+            secure    => 0,
+            expires   => 1376081877
+        );
+
+        $monster->set_cookie( $cookie );
+
+AUTHOR
+    Olaf Alders <olaf@wundercounter.com>
+
+COPYRIGHT AND LICENSE
+    This software is copyright (c) 2012 by Olaf Alders.
+
+    This is free software; you can redistribute it and/or modify it under
+    the same terms as the Perl 5 programming language system itself.
+
