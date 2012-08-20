@@ -6,6 +6,7 @@ package HTTP::CookieMonster;
 use Moo;
 use Carp;
 use Data::Printer;
+use HTTP::Cookies;
 use HTTP::CookieMonster::Cookie;
 use Safe::Isa;
 use Scalar::Util qw( reftype );

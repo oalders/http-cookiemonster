@@ -6,17 +6,15 @@ use warnings;
 use Test::More;
 
 use Data::Printer;
+use Data::Serializer;
 use HTTP::CookieMonster;
-use HTTP::Cookies;
-use WWW::Mechanize;
 
-my $cookies = HTTP::Cookies->new;
-my $monster = HTTP::CookieMonster->new( cookie_jar => $cookies );
+my $serializer = Data::Serializer->new;
+my $jar = $serializer->retrieve('t/.cookie_jar.txt');
 
-my $mech = WWW::Mechanize->new;
-$mech->get( 'http://www.nytimes.com' );
+p $jar;
 
-$monster = HTTP::CookieMonster->new( cookie_jar => $mech->cookie_jar );
+$monster = HTTP::CookieMonster->new( cookie_jar => $jar );
 ok( $monster,              "got a monster" );
 ok( $monster->all_cookies, "all cookies" );
 ok( $monster->feeling_lucky('RMID'), "got a single cookie" );
