@@ -39,10 +39,6 @@ sub _build_all_cookies {
 
 }
 
-sub _set_all_cookies {
-    return shift->_build_all_cookies;
-}
-
 sub get_cookie {
 
     my $self = shift;

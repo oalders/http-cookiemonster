@@ -10,7 +10,6 @@ use Data::Serializer;
 use HTTP::CookieMonster;
 
 my $serializer = Data::Serializer->new;
-diag `pwd`;
 my $jar = $serializer->retrieve('t/cookie_jar.txt');
 
 my $monster = HTTP::CookieMonster->new( cookie_jar => $jar );
@@ -50,8 +49,6 @@ isa_ok( $first_cookie, 'HTTP::CookieMonster::Cookie' );
 
 my @all_foo_cookies = $monster->get_cookie( 'foo' );
 my $count = @all_foo_cookies;
-
-my @all_cookies = $monster->all_cookies;
 is( $count, 2, "there are 2 foo cookies" );
 
 done_testing();
