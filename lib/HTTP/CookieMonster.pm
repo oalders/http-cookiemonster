@@ -40,7 +40,7 @@ sub _build_all_cookies {
 
 }
 
-sub set_all_cookies {
+sub _set_all_cookies {
     return shift->_build_all_cookies;
 }
 
@@ -78,7 +78,7 @@ sub set_cookie {
         $cookie->discard,   $cookie->hash
     ) ? 1 : 0;
 
-    $self->set_all_cookies( $self->_build_all_cookies );
+    $self->_set_all_cookies( $self->_build_all_cookies );
     return $success;
 
 }
