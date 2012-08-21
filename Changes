@@ -1,4 +1,8 @@
 Revision history for HTTP-CookieMonster
 
+0.02 2012-08-21
+    - Fixes errors in Pod
+    - Fixes internal cookie setting
+
 0.01 2012-08-21
     - Initial release
