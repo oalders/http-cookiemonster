@@ -40,11 +40,12 @@ has 'hash'      => ( is => 'rw', );
 
     use WWW::Mechanize;
     use HTTP::CookieMonster;
+
     my $mech = WWW::Mechanize->new;
     my $monster = HTTP::CookieMonster->new( cookie_jar => $mech->cookie_jar );
     $monster->set_cookie( $cookie );
 
-    $mech->get( $url ); # passes $cookie in request
+    $mech->get( $url );    # passes $cookie in request
 
 =head1 DESCRIPTION
 
