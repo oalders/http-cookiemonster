@@ -10,7 +10,8 @@ use Data::Serializer;
 use HTTP::CookieMonster;
 
 my $serializer = Data::Serializer->new;
-my $jar = $serializer->retrieve('t/.cookie_jar.txt');
+diag `pwd`;
+my $jar = $serializer->retrieve('t/cookie_jar.txt');
 
 my $monster = HTTP::CookieMonster->new( cookie_jar => $jar );
 ok( $monster,              "got a monster" );
