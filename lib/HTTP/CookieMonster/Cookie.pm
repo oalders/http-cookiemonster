@@ -108,7 +108,7 @@ The value of the cookie.
 
 =head2 discard
 
-=head3 hash
+=head2 hash
 
     $cookie->hash( { HttpOnly => undef } );
 

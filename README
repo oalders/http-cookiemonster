@@ -3,7 +3,7 @@ NAME
     HTTP::Cookies
 
 VERSION
-    version 0.02
+    version 0.03
 
 SYNOPSIS
         use HTTP::CookieMonster;
@@ -53,10 +53,10 @@ DESCRIPTION
     those params in the correct order etc.
 
     HTTP::CookieMonster gives you a simple interface for getting and setting
-    cookies. You can fetch an ArrayRef of all your cookies:
+    cookies. You can fetch an ARRAY of all your cookies:
 
-        my $all_cookies = $monster->all_cookies;
-        foreach my $cookie ( @{ $all_cookies } ) {
+        my @all_cookies = $monster->all_cookies;
+        foreach my $cookie ( @all_cookies ) {
             print $cookie->key;
             print $cookie->value;
             print $cookie->secure;
@@ -109,8 +109,13 @@ DESCRIPTION
     A reader which returns an HTTP::Cookies object.
 
   all_cookies
-    Returns an ArrayRef of all cookies in the cookie jar, represented as
+    Returns an ARRAY of all cookies in the cookie jar, represented as
     HTTP::CookieMonster::Cookie objects.
+
+        my @cookies = $monster->all_cookies;
+        foreach my $cookie ( @cookies ) {
+            print $cookie->key;
+        }
 
   set_cookie( $cookie )
     Sets a cookie and updates the cookie jar. Requires a
