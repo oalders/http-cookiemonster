@@ -22,20 +22,19 @@ has 'cookie_jar' => (
 
 );
 
-has 'all_cookies' => (
-    is      => 'rwp',
-    lazy    => 1,
-    builder => '_build_all_cookies',
-    isa     => sub { die "ArrayRef required" if reftype $_[0] ne 'ARRAY' }
-);
+# all_cookies() is now a straight method rather than a Moo accessor in order to
+# prevent the all_cookies list from getting out of sync with changes to the
+# cookie_jar which happen outside of this module.  Rather than trying to detect
+# changes, we'll just create a fresh list each time.  Performance penalties
+# should be minimal and this keeps things simple.
 
-sub _build_all_cookies {
+sub all_cookies {
 
     my $self = shift;
     @_cookies = ();
     $self->cookie_jar->scan( \&_check_cookies );
 
-    return \@_cookies;
+    wantarray ? return @_cookies : return \@_cookies;
 
 }
 
@@ -45,7 +44,7 @@ sub get_cookie {
     my $name = shift;
 
     my @cookies = ( );
-    foreach my $cookie ( @{ $self->all_cookies } ) {
+    foreach my $cookie ( $self->all_cookies ) {
         if ( $cookie->key eq $name ) {
             return $cookie if !wantarray;
             push @cookies, $cookie;
@@ -66,15 +65,12 @@ sub set_cookie {
         croak "$cookie is not a HTTP::CookieMonster::Cookie object";
     }
 
-    my $success = $self->cookie_jar->set_cookie(
+    return $self->cookie_jar->set_cookie(
         $cookie->version,   $cookie->key,    $cookie->val,
         $cookie->path,      $cookie->domain, $cookie->port,
         $cookie->path_spec, $cookie->secure, $cookie->expires,
         $cookie->discard,   $cookie->hash
     ) ? 1 : 0;
-
-    $self->_set_all_cookies( $self->_build_all_cookies );
-    return $success;
 
 }
 
@@ -157,10 +153,10 @@ checking the docs regularly to see if you did, in fact, get all those params in
 the correct order etc.
 
 HTTP::CookieMonster gives you a simple interface for getting and setting
-cookies. You can fetch an ArrayRef of all your cookies:
+cookies. You can fetch an ARRAY of all your cookies:
 
-    my $all_cookies = $monster->all_cookies;
-    foreach my $cookie ( @{ $all_cookies } ) {
+    my @all_cookies = $monster->all_cookies;
+    foreach my $cookie ( @all_cookies ) {
         print $cookie->key;
         print $cookie->value;
         print $cookie->secure;
@@ -216,8 +212,13 @@ A reader which returns an L<HTTP::Cookies> object.
 
 =head2 all_cookies
 
-Returns an ArrayRef of all cookies in the cookie jar, represented as
+Returns an ARRAY of all cookies in the cookie jar, represented as
 L<HTTP::CookieMonster::Cookie> objects.
+
+    my @cookies = $monster->all_cookies;
+    foreach my $cookie ( @cookies ) {
+        print $cookie->key;
+    }
 
 =head2 set_cookie( $cookie )
 
