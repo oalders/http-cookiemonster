@@ -13,7 +13,10 @@ use Scalar::Util qw( reftype );
 my $serializer = Data::Serializer->new;
 my $jar        = $serializer->retrieve( 't/cookie_jar.txt' );
 
-my $monster = HTTP::CookieMonster->new( cookie_jar => $jar );
+my $obj = HTTP::CookieMonster->new( cookie_jar => $jar );
+ok ( $obj, "can create object with 2 args" );
+
+my $monster = HTTP::CookieMonster->new( $jar );
 ok( $monster,              "got a monster" );
 ok( $monster->all_cookies, "all cookies" );
 

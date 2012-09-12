@@ -22,6 +22,13 @@ has 'cookie_jar' => (
 
 );
 
+sub BUILDARGS {
+    my ( $class, @args ) = @_;
+
+    return { cookie_jar => shift @args } if @args == 1;
+    return {@args};
+}
+
 # all_cookies() is now a straight method rather than a Moo accessor in order to
 # prevent the all_cookies list from getting out of sync with changes to the
 # cookie_jar which happen outside of this module.  Rather than trying to detect
@@ -111,7 +118,7 @@ sub _check_cookies {
     my $mech = WWW::Mechanize->new;
     $mech->get( 'http://www.nytimes.com' );
 
-    my $monster = HTTP::CookieMonster->new( cookie_jar => $mech->cookie_jar );
+    my $monster = HTTP::CookieMonster->new( $mech->cookie_jar );
     my $cookie = $monster->get_cookie('RMID');
     print $cookie->val;
 
@@ -204,7 +211,7 @@ Or, add an entirely new cookie to the jar:
 new() takes just one required parameter, which is cookie_jar, a valid
 L<HTTP::Cookies> object.
 
-    my $monster = HTTP::CookieMonster->new( cookie_jar => $mech->cookie_jar );
+    my $monster = HTTP::CookieMonster->new( $mech->cookie_jar );
 
 =head2 cookie_jar
 
@@ -225,7 +232,7 @@ L<HTTP::CookieMonster::Cookie> objects.
 Sets a cookie and updates the cookie jar.  Requires a
 L<HTTP::CookieMonster::Cookie> object.
 
-    my $monster = HTTP::CookieMonster->new( cookie_jar => $mech->cookie_jar );
+    my $monster = HTTP::CookieMonster->new( $mech->cookie_jar );
     my $s = $monster->get_cookie('session');
     $s->val('random_string');
 
@@ -259,12 +266,18 @@ In this case asking for get_cookie('session') in scalar context may not return
 the cookie which you were expecting.  You will be safer calling get_cookie() in
 list context:
 
-    $monster = HTTP::CookieMonster->new( cookie_jar => $mech->cookie_jar );
+    $monster = HTTP::CookieMonster->new( $mech->cookie_jar );
 
     # first cookie with this name
     my $first_session = $monster->get_cookie('session');
 
     # all cookies with this name
     my @all_sessions  = $monster->get_cookie('session');
+
+=begin Pod::Coverage
+
+BUILDARGS
+
+=end Pod::Coverage
 
 =cut

@@ -3,7 +3,7 @@ NAME
     HTTP::Cookies
 
 VERSION
-    version 0.03
+    version 0.04
 
 SYNOPSIS
         use HTTP::CookieMonster;
@@ -12,7 +12,7 @@ SYNOPSIS
         my $mech = WWW::Mechanize->new;
         $mech->get( 'http://www.nytimes.com' );
 
-        my $monster = HTTP::CookieMonster->new( cookie_jar => $mech->cookie_jar );
+        my $monster = HTTP::CookieMonster->new( $mech->cookie_jar );
         my $cookie = $monster->get_cookie('RMID');
         print $cookie->val;
 
@@ -103,7 +103,7 @@ DESCRIPTION
     new() takes just one required parameter, which is cookie_jar, a valid
     HTTP::Cookies object.
 
-        my $monster = HTTP::CookieMonster->new( cookie_jar => $mech->cookie_jar );
+        my $monster = HTTP::CookieMonster->new( $mech->cookie_jar );
 
   cookie_jar
     A reader which returns an HTTP::Cookies object.
@@ -121,7 +121,7 @@ DESCRIPTION
     Sets a cookie and updates the cookie jar. Requires a
     HTTP::CookieMonster::Cookie object.
 
-        my $monster = HTTP::CookieMonster->new( cookie_jar => $mech->cookie_jar );
+        my $monster = HTTP::CookieMonster->new( $mech->cookie_jar );
         my $s = $monster->get_cookie('session');
         $s->val('random_string');
 
@@ -154,7 +154,7 @@ DESCRIPTION
     context may not return the cookie which you were expecting. You will be
     safer calling get_cookie() in list context:
 
-        $monster = HTTP::CookieMonster->new( cookie_jar => $mech->cookie_jar );
+        $monster = HTTP::CookieMonster->new( $mech->cookie_jar );
 
         # first cookie with this name
         my $first_session = $monster->get_cookie('session');
