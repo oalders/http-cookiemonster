@@ -1,8 +1,9 @@
 Revision history for HTTP-CookieMonster
 
-0.04 2012-08-31
+0.04 2012-09-16
     - Now using BUILDARGS to accept just one argument when creating new
       HTTP::CookieMonster object
+    - Adds cookies() function for quick read-only cookie access
 
 0.03 2012-08-23
     - all_cookies() now returns an ARRAY rather than ARRAYREF, but will still
