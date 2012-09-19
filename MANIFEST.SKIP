@@ -3,3 +3,4 @@
 .gitignore
 .perlcriticrc
 MANIFEST.SKIP
+t/blog.t
