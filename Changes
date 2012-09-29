@@ -1,5 +1,8 @@
 Revision history for HTTP-CookieMonster
 
+0.05 2012-09-28
+    - Fixes typo in SYNOPSIS
+
 0.04 2012-09-19
     - Now using BUILDARGS to accept just one argument when creating new
       HTTP::CookieMonster object

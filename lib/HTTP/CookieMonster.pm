@@ -139,7 +139,7 @@ sub _check_cookies {
 =head1 SYNOPSIS
 
     # Use the functional interface for quick read-only access
-    use HTTP::CookieMonster qw( 'cookies' );
+    use HTTP::CookieMonster qw( cookies );
     use WWW::Mechanize;
 
     my $mech = WWW::Mechanize->new;
