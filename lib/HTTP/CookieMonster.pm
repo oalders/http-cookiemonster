@@ -220,7 +220,7 @@ fetch a cookie by name.
 
 This gives you fast access to a cookie without a callback, iterating over a
 list etc. It's good for quick hacks and you can dump the cookie quite easily to
-inspect it's contents in a highly readable way:
+inspect its contents in a highly readable way:
 
     use Data::Printer;
     p $cookie;
