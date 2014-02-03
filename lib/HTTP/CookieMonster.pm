@@ -171,8 +171,8 @@ Warning: this is BETA code which is still subject to change.
 This module was created because messing around with L<HTTP::Cookies> is
 non-trivial.  L<HTTP::Cookies> a very useful module, but using it is not always
 as easy and clean as it could be. For instance, if you want to find a
-particular cookie, you can just ask for it by name.  Instead, you have to use a
-callback:
+particular cookie, you can't just ask for it by name.  Instead, you have to use
+a callback:
 
     $cookie_jar->scan( \&callback )
 
