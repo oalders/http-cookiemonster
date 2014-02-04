@@ -1,6 +1,8 @@
 Revision history for HTTP-CookieMonster
 
 {{$NEXT}}
+
+0.06 2014-02-04 10:42:31 America/Toronto
     - Adds delete_cookie() method
 
 0.05 2012-09-28
