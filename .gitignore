@@ -1,4 +1,4 @@
-/HTTP-CookieMonster*
 .build
-*.kpf
-*.komodoproject
+/HTTP-CookieMonster*
+cpanfile.snapshot
+local
