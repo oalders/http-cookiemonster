@@ -3,7 +3,7 @@ NAME
     HTTP::Cookies
 
 VERSION
-    version 0.05
+    version 0.06
 
 SYNOPSIS
         # Use the functional interface for quick read-only access
@@ -38,8 +38,8 @@ DESCRIPTION
     This module was created because messing around with HTTP::Cookies is
     non-trivial. HTTP::Cookies a very useful module, but using it is not
     always as easy and clean as it could be. For instance, if you want to
-    find a particular cookie, you can just ask for it by name. Instead, you
-    have to use a callback:
+    find a particular cookie, you can't just ask for it by name. Instead,
+    you have to use a callback:
 
         $cookie_jar->scan( \&callback )
 
@@ -87,7 +87,7 @@ DESCRIPTION
 
     This gives you fast access to a cookie without a callback, iterating
     over a list etc. It's good for quick hacks and you can dump the cookie
-    quite easily to inspect it's contents in a highly readable way:
+    quite easily to inspect its contents in a highly readable way:
 
         use Data::Printer;
         p $cookie;
@@ -157,6 +157,10 @@ DESCRIPTION
         );
 
         $monster->set_cookie( $cookie );
+
+  delete_cookie( $cookie )
+    Deletes a cookie and updates the cookie jar. Requires a
+    HTTP::CookieMonster::Cookie object.
 
   get_cookie( $name )
     Be aware that this method may surprise you by what it returns. When

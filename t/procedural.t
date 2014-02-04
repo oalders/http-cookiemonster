@@ -5,7 +5,6 @@ use warnings;
 
 use Test::Most;
 
-use Data::Printer;
 use Data::Serializer;
 use HTTP::CookieMonster qw( cookies );
 
