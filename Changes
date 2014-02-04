@@ -1,6 +1,8 @@
 Revision history for HTTP-CookieMonster
 
 {{$NEXT}}
+
+0.07 2014-02-04 10:50:27 America/Toronto
     - Adds local to MANIFEST.SKIP
 
 0.06 2014-02-04 10:42:31 America/Toronto
