@@ -5,7 +5,6 @@ use warnings;
 
 use Test::More;
 
-use Data::Printer;
 use Data::Serializer;
 use HTTP::CookieMonster;
 use Scalar::Util qw( reftype );
@@ -65,5 +64,13 @@ isa_ok( $first_cookie, 'HTTP::CookieMonster::Cookie' );
 my @all_foo_cookies = $monster->get_cookie( 'foo' );
 my $count           = @all_foo_cookies;
 is( $count, 2, "there are 2 foo cookies" );
+
+ok( $monster->delete_cookie( $cookie ), 'delete returns true' );
+
+{
+    my @all_foo_cookies = $monster->get_cookie( 'foo' );
+    my $count           = @all_foo_cookies;
+    is( $count, 1, '1 foo cookie deleted' );
+}
 
 done_testing();

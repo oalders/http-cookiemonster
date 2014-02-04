@@ -107,6 +107,22 @@ sub set_cookie {
 
 }
 
+sub delete_cookie {
+
+    my $self   = shift;
+    my $cookie = shift;
+
+    if ( !$cookie->$_isa( 'HTTP::CookieMonster::Cookie' ) ) {
+        croak "$cookie is not a HTTP::CookieMonster::Cookie object";
+    }
+
+    $cookie->expires( -1 );
+
+    return $self->set_cookie( $cookie );
+
+}
+
+
 sub _check_cookies {
 
     my @args = @_;
@@ -294,6 +310,11 @@ L<HTTP::CookieMonster::Cookie> object.
     );
 
     $monster->set_cookie( $cookie );
+
+=head2 delete_cookie( $cookie )
+
+Deletes a cookie and updates the cookie jar.  Requires a
+L<HTTP::CookieMonster::Cookie> object.
 
 =head2 get_cookie( $name )
 

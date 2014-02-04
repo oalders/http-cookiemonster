@@ -1,5 +1,8 @@
 Revision history for HTTP-CookieMonster
 
+{{$NEXT}}
+    - Adds delete_cookie() method
+
 0.05 2012-09-28
     - Fixes typo in SYNOPSIS
 
