@@ -2,6 +2,9 @@ use strict;
 use warnings;
 
 package HTTP::CookieMonster;
+$HTTP::CookieMonster::VERSION = '0.08';
+
+use 5.006;
 
 use Moo;
 use Carp qw( croak );
