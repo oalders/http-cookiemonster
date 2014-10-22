@@ -10,6 +10,7 @@ use HTTP::CookieMonster::Cookie;
 use Safe::Isa;
 use Scalar::Util qw( reftype );
 use Sub::Exporter -setup => { exports => ['cookies'] };
+use URI::Escape qw( uri_escape uri_unescape );
 
 my @_cookies = ();
 
@@ -99,7 +100,7 @@ sub set_cookie {
     }
 
     return $self->cookie_jar->set_cookie(
-        $cookie->version,   $cookie->key,    $cookie->val,
+        $cookie->version,   $cookie->key,    uri_escape( $cookie->val ),
         $cookie->path,      $cookie->domain, $cookie->port,
         $cookie->path_spec, $cookie->secure, $cookie->expires,
         $cookie->discard,   $cookie->hash
@@ -131,7 +132,7 @@ sub _check_cookies {
         HTTP::CookieMonster::Cookie->new(
         version   => $args[0],
         key       => $args[1],
-        val       => $args[2],
+        val       => uri_unescape( $args[2] ),
         path      => $args[3],
         domain    => $args[4],
         port      => $args[5],
