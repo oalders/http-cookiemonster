@@ -84,6 +84,11 @@ The value of the cookie.
 
     $cookie->value( "random_stuff" );
 
+If you are creating a new cookie, you should escape the value first.
+
+    use URI::Escape qw( uri_escape );
+    $cookie->value( uri_escape( 'random_stuff' ) );
+
 =head2 path
 
     $cookie->path( "/" );
@@ -111,5 +116,11 @@ The value of the cookie.
 =head2 hash
 
     $cookie->hash( { HttpOnly => undef } );
+
+=head1 SEE ALSO
+
+This is mainly useful for creating cookies to be used by L<LWP::UserAgent> and
+L<WWW::Mechanize classes>.  If you need to create cookies to set via headers,
+have a look at L<Cookie::Baker>.
 
 =cut

@@ -5,6 +5,7 @@ requires "Safe::Isa" => "0";
 requires "Scalar::Util" => "0";
 requires "Sub::Exporter" => "0";
 requires "URI::Escape" => "0";
+requires "perl" => "5.006";
 requires "strict" => "0";
 requires "warnings" => "0";
 
