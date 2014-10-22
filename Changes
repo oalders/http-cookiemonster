@@ -1,6 +1,8 @@
 Revision history for HTTP-CookieMonster
 
 {{$NEXT}}
+
+0.08 2014-10-22 13:47:09 America/Toronto
     - Cookie values are now unescaped before reading and escaped before writing.
 
 0.07 2014-02-04 10:50:27 America/Toronto
