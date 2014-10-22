@@ -16,12 +16,11 @@ use Sub::Exporter -setup => { exports => ['cookies'] };
 use URI::Escape qw( uri_escape uri_unescape );
 
 my @_cookies = ();
-
 has 'cookie_jar' => (
     required => 1,
     is       => 'ro',
     isa      => sub {
-        die "HTTP::Cookies object expected"
+        croak 'HTTP::Cookies object expected'
             if !$_[0]->$_isa( 'HTTP::Cookies' );
         }
 
@@ -41,15 +40,12 @@ sub BUILDARGS {
 # should be minimal and this keeps things simple.
 
 sub all_cookies {
-
     my $self = shift;
     @_cookies = ();
     $self->cookie_jar->scan( \&_check_cookies );
 
     wantarray ? return @_cookies : return \@_cookies;
-
 }
-
 
 # my $cookie = cookies( $jar ); -- first cookie (makes no sense)
 # my $session = cookies( $jar, 'session' );
@@ -57,30 +53,28 @@ sub all_cookies {
 # my @sessions = cookies( $jar, 'session' );
 
 sub cookies {
-
     my ( $cookie_jar, $name ) = @_;
-    die "This function is not part of the OO interface"
+    croak 'This function is not part of the OO interface'
         if $cookie_jar->$_isa( 'HTTP::CookieMonster' );
 
     my $monster = HTTP::CookieMonster->new( $cookie_jar );
 
     if ( !$name ) {
         if ( !wantarray ) {
-            croak "Please specify a cookie name when asking for a single cookie";
+            croak
+                'Please specify a cookie name when asking for a single cookie';
         }
         return @{ $monster->all_cookies };
     }
 
     return $monster->get_cookie( $name );
-
 }
 
 sub get_cookie {
-
     my $self = shift;
     my $name = shift;
 
-    my @cookies = ( );
+    my @cookies = ();
     foreach my $cookie ( $self->all_cookies ) {
         if ( $cookie->key eq $name ) {
             return $cookie if !wantarray;
@@ -90,11 +84,9 @@ sub get_cookie {
 
     return shift @cookies if !wantarray;
     return @cookies;
-
 }
 
 sub set_cookie {
-
     my $self   = shift;
     my $cookie = shift;
 
@@ -103,16 +95,16 @@ sub set_cookie {
     }
 
     return $self->cookie_jar->set_cookie(
-        $cookie->version,   $cookie->key,    uri_escape( $cookie->val ),
-        $cookie->path,      $cookie->domain, $cookie->port,
-        $cookie->path_spec, $cookie->secure, $cookie->expires,
-        $cookie->discard,   $cookie->hash
+        $cookie->version,           $cookie->key,
+        uri_escape( $cookie->val ), $cookie->path,
+        $cookie->domain,            $cookie->port,
+        $cookie->path_spec,         $cookie->secure,
+        $cookie->expires,           $cookie->discard,
+        $cookie->hash
     ) ? 1 : 0;
-
 }
 
 sub delete_cookie {
-
     my $self   = shift;
     my $cookie = shift;
 
@@ -123,12 +115,9 @@ sub delete_cookie {
     $cookie->expires( -1 );
 
     return $self->set_cookie( $cookie );
-
 }
 
-
 sub _check_cookies {
-
     my @args = @_;
 
     push @_cookies,
