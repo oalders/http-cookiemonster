@@ -1,4 +1,5 @@
 .build
+.tidyall.d/
 /HTTP-CookieMonster*
 cpanfile.snapshot
 local
