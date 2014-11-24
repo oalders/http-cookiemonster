@@ -3,7 +3,7 @@ NAME
     HTTP::Cookies
 
 VERSION
-    version 0.08
+    version 0.09
 
 SYNOPSIS
         # Use the functional interface for quick read-only access
@@ -33,8 +33,6 @@ SYNOPSIS
         $mech->get( $url );
 
 DESCRIPTION
-    Warning: this is BETA code which is still subject to change.
-
     This module was created because messing around with HTTP::Cookies is
     non-trivial. HTTP::Cookies a very useful module, but using it is not
     always as easy and clean as it could be. For instance, if you want to
@@ -74,7 +72,7 @@ DESCRIPTION
         my @all_cookies = $monster->all_cookies;
         foreach my $cookie ( @all_cookies ) {
             print $cookie->key;
-            print $cookie->value;
+            print $cookie->val;
             print $cookie->secure;
             print $cookie->domain;
             # etc
@@ -102,7 +100,7 @@ DESCRIPTION
     Or, add an entirely new cookie to the jar:
 
         use HTTP::CookieMonster::Cookie;
-        my $cookie = HTTP::CookieMonster::Cookie->new
+        my $cookie = HTTP::CookieMonster::Cookie->new(
             key       => 'cookie-name',
             val       => 'cookie-val',
             path      => '/',

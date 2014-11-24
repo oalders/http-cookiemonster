@@ -2,6 +2,9 @@ Revision history for HTTP-CookieMonster
 
 {{$NEXT}}
 
+    - Removes the BETA warning
+    - Fixes some Pod typos
+
 0.08 2014-10-22 13:47:09 America/Toronto
     - Cookie values are now unescaped before reading and escaped before writing.
 

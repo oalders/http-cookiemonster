@@ -82,7 +82,7 @@ The name of the cookie.
 
 The value of the cookie.
 
-    $cookie->value( "random_stuff" );
+    $cookie->val( "random_stuff" );
 
 If you are creating a new cookie, you should escape the value first.
 
