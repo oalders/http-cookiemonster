@@ -2,11 +2,10 @@ use strict;
 use warnings;
 
 package HTTP::CookieMonster;
-$HTTP::CookieMonster::VERSION = '0.09';
 
 use 5.006;
 
-use Moo;
+use Moo 1.000003;
 use Carp qw( croak );
 use HTTP::Cookies;
 use HTTP::CookieMonster::Cookie;
