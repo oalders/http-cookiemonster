@@ -1,7 +1,7 @@
+package HTTP::CookieMonster::Cookie;
+
 use strict;
 use warnings;
-
-package HTTP::CookieMonster::Cookie;
 
 use Moo;
 

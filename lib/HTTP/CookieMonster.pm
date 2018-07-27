@@ -1,7 +1,7 @@
+package HTTP::CookieMonster;
+
 use strict;
 use warnings;
-
-package HTTP::CookieMonster;
 
 use 5.006;
 
@@ -20,9 +20,8 @@ has 'cookie_jar' => (
     is       => 'ro',
     isa      => sub {
         croak 'HTTP::Cookies object expected'
-            if !$_[0]->$_isa( 'HTTP::Cookies' );
-        }
-
+            if !$_[0]->$_isa('HTTP::Cookies');
+    },
 );
 
 sub BUILDARGS {
@@ -54,9 +53,9 @@ sub all_cookies {
 sub cookies {
     my ( $cookie_jar, $name ) = @_;
     croak 'This function is not part of the OO interface'
-        if $cookie_jar->$_isa( 'HTTP::CookieMonster' );
+        if $cookie_jar->$_isa('HTTP::CookieMonster');
 
-    my $monster = HTTP::CookieMonster->new( $cookie_jar );
+    my $monster = HTTP::CookieMonster->new($cookie_jar);
 
     if ( !$name ) {
         if ( !wantarray ) {
@@ -66,7 +65,7 @@ sub cookies {
         return @{ $monster->all_cookies };
     }
 
-    return $monster->get_cookie( $name );
+    return $monster->get_cookie($name);
 }
 
 sub get_cookie {
@@ -89,7 +88,7 @@ sub set_cookie {
     my $self   = shift;
     my $cookie = shift;
 
-    if ( !$cookie->$_isa( 'HTTP::CookieMonster::Cookie' ) ) {
+    if ( !$cookie->$_isa('HTTP::CookieMonster::Cookie') ) {
         croak "$cookie is not a HTTP::CookieMonster::Cookie object";
     }
 
@@ -107,13 +106,13 @@ sub delete_cookie {
     my $self   = shift;
     my $cookie = shift;
 
-    if ( !$cookie->$_isa( 'HTTP::CookieMonster::Cookie' ) ) {
+    if ( !$cookie->$_isa('HTTP::CookieMonster::Cookie') ) {
         croak "$cookie is not a HTTP::CookieMonster::Cookie object";
     }
 
-    $cookie->expires( -1 );
+    $cookie->expires(-1);
 
-    return $self->set_cookie( $cookie );
+    return $self->set_cookie($cookie);
 }
 
 sub _check_cookies {
