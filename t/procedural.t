@@ -51,6 +51,9 @@ my $new_cookie = HTTP::CookieMonster::Cookie->new(
 my $monster = HTTP::CookieMonster->new($jar);
 $monster->set_cookie($new_cookie);
 
+dies_ok { $monster->set_cookie() }
+'cookie required when calling set_cookie()';
+
 @sessions = cookies( $jar, 'RMID' );
 is( scalar @sessions, 2, 'returns two RMIDs in array context' );
 foreach my $session (@sessions) {
