@@ -120,7 +120,7 @@ If you are creating a new cookie, you should escape the value first.
 =head1 SEE ALSO
 
 This is mainly useful for creating cookies to be used by L<LWP::UserAgent> and
-L<WWW::Mechanize classes>.  If you need to create cookies to set via headers,
+L<WWW::Mechanize> classes.  If you need to create cookies to set via headers,
 have a look at L<Cookie::Baker>.
 
 =cut
