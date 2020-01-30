@@ -3,14 +3,12 @@
 use strict;
 use warnings;
 
-use Test::More;
-
-use Data::Serializer;
 use HTTP::CookieMonster;
 use Scalar::Util qw( reftype );
+use Storable qw( retrieve store );
+use Test::More;
 
-my $serializer = Data::Serializer->new;
-my $jar        = $serializer->retrieve('t/cookie_jar.txt');
+my $jar = retrieve('t/cookie_jar.txt');
 
 my $obj = HTTP::CookieMonster->new( cookie_jar => $jar );
 ok( $obj, 'can create object with 2 args' );

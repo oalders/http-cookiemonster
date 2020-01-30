@@ -89,7 +89,7 @@ sub set_cookie {
     my $cookie = shift;
 
     if ( !$cookie ) {
-        croak "Missing cookie, an HTTP::CookieMonster::Cookie object";
+        croak 'Missing cookie, an HTTP::CookieMonster::Cookie object';
     }
 
     if ( !$cookie->$_isa('HTTP::CookieMonster::Cookie') ) {

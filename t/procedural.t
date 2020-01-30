@@ -3,22 +3,23 @@
 use strict;
 use warnings;
 
-use Test::Most;
-
-use Data::Serializer;
 use HTTP::CookieMonster qw( cookies );
+use Storable qw( retrieve store );
+use Test::Fatal qw( exception );
+use Test::More;
+
+my $jar = retrieve('t/cookie_jar.txt');
 
 # 1) my $cookie   = cookies( $jar ); -- first cookie (makes no sense)
 # 2) my $session  = cookies( $jar, 'session' );
 # 3) my @cookies  = cookies( $jar );
 # 4) my @sessions = cookies( $jar, 'session' );
 
-my $serializer = Data::Serializer->new;
-my $jar        = $serializer->retrieve('t/cookie_jar.txt');
-
 # case 1
-dies_ok { my $cookies = cookies($jar) }
-'cookie name required in scalar context';
+ok(
+    exception { my $cookies = cookies($jar) },
+    'cookie name required in scalar context'
+);
 
 # case 2
 my $rmid = cookies( $jar, 'RMID' );
@@ -51,8 +52,10 @@ my $new_cookie = HTTP::CookieMonster::Cookie->new(
 my $monster = HTTP::CookieMonster->new($jar);
 $monster->set_cookie($new_cookie);
 
-dies_ok { $monster->set_cookie() }
-'cookie required when calling set_cookie()';
+ok(
+    exception { $monster->set_cookie() },
+    'cookie required when calling set_cookie()'
+);
 
 @sessions = cookies( $jar, 'RMID' );
 is( scalar @sessions, 2, 'returns two RMIDs in array context' );
