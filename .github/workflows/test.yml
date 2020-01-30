@@ -11,7 +11,7 @@ jobs:
     strategy:
       max-parallel: 1
     container:
-      image: oalders/developer-perl
+      image: perldocker/perl-tester:5.30
     steps:
       - uses: actions/checkout@v1
       - name: perl -V
@@ -66,7 +66,7 @@ jobs:
           - "5.28"
           - "5.30"
     container:
-      image: oalders/tester-perl:${{ matrix.perl-version }}
+      image: perldocker/perl-tester:${{ matrix.perl-version }}
       env:
         AUTHOR_TESTING: 1
         RELEASE_TESTING: 1
