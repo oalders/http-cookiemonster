@@ -45,7 +45,7 @@ has 'hash'      => ( is => 'rw', );
     my $monster = HTTP::CookieMonster->new( cookie_jar => $mech->cookie_jar );
     $monster->set_cookie( $cookie );
 
-    $mech->get( $url );    # passes $cookie in request
+    $mech->get('https://example.com');    # passes $cookie in request
 
 =head1 DESCRIPTION
 
