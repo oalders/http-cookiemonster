@@ -15,6 +15,7 @@ on 'test' => sub {
   requires "Storable" => "0";
   requires "Test::Fatal" => "0";
   requires "Test::More" => "0";
+  requires "WWW::Mechanize" => "0";
   requires "perl" => "5.006";
 };
 
