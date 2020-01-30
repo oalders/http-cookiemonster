@@ -28,11 +28,12 @@ my %WriteMakefileArgs = (
     "warnings" => 0
   },
   "TEST_REQUIRES" => {
-    "Data::Serializer" => 0,
     "ExtUtils::MakeMaker" => 0,
     "File::Spec" => 0,
+    "Storable" => 0,
+    "Test::Fatal" => 0,
     "Test::More" => 0,
-    "Test::Most" => 0
+    "WWW::Mechanize" => 0
   },
   "VERSION" => "0.10",
   "test" => {
@@ -43,17 +44,18 @@ my %WriteMakefileArgs = (
 
 my %FallbackPrereqs = (
   "Carp" => 0,
-  "Data::Serializer" => 0,
   "ExtUtils::MakeMaker" => 0,
   "File::Spec" => 0,
   "HTTP::Cookies" => 0,
   "Moo" => "1.000003",
   "Safe::Isa" => 0,
   "Scalar::Util" => 0,
+  "Storable" => 0,
   "Sub::Exporter" => 0,
+  "Test::Fatal" => 0,
   "Test::More" => 0,
-  "Test::Most" => 0,
   "URI::Escape" => 0,
+  "WWW::Mechanize" => 0,
   "strict" => 0,
   "warnings" => 0
 );
