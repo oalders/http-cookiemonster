@@ -16,6 +16,11 @@ jobs:
       - uses: actions/checkout@v1
       - name: perl -V
         run: perl -V
+      - name: Get latest author bundle
+        run: >
+          cpm install -g
+          --show-build-log-on-failure
+          Dist::Zilla::PluginBundle::Author::OALDERS
       - name: Install author deps
         run: dzil authordeps | xargs cpm install -g --show-build-log-on-failure
       - name: Build
