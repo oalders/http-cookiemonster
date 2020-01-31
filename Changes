@@ -1,6 +1,8 @@
 Revision history for HTTP-CookieMonster
 
 {{$NEXT}}
+    - Remove Storable dependency (GH#10)
+    - Move WWW::Mechanize to develop dependencies
 
 0.10      2020-01-30 18:20:52Z
     - Remove Data::Serializer (GH#5) (Olaf Alders)
