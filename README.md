@@ -6,7 +6,7 @@ HTTP::CookieMonster - Easy read/write access to your jar of HTTP::Cookies
 
 # VERSION
 
-version 0.10
+version 0.11
 
 # SYNOPSIS
 
@@ -15,7 +15,7 @@ version 0.10
     use WWW::Mechanize;
 
     my $mech = WWW::Mechanize->new;
-    my $url = 'http://www.nytimes.com';
+    my $url = 'https://www.nytimes.com';
     $mech->get( $url );
 
     my @cookies = cookies( $mech->cookie_jar );
@@ -38,8 +38,8 @@ version 0.10
 
 # DESCRIPTION
 
-This module was created because messing around with [HTTP::Cookies](https://metacpan.org/pod/HTTP%3A%3ACookies) is
-non-trivial.  [HTTP::Cookies](https://metacpan.org/pod/HTTP%3A%3ACookies) a very useful module, but using it is not always
+This module was created because messing around with [HTTP::Cookies](https://metacpan.org/pod/HTTP::Cookies) is
+non-trivial.  [HTTP::Cookies](https://metacpan.org/pod/HTTP::Cookies) a very useful module, but using it is not always
 as easy and clean as it could be. For instance, if you want to find a
 particular cookie, you can't just ask for it by name.  Instead, you have to use
 a callback:
@@ -120,18 +120,18 @@ Or, add an entirely new cookie to the jar:
 ## new
 
 new() takes just one required parameter, which is cookie\_jar, a valid
-[HTTP::Cookies](https://metacpan.org/pod/HTTP%3A%3ACookies) object.
+[HTTP::Cookies](https://metacpan.org/pod/HTTP::Cookies) object.
 
     my $monster = HTTP::CookieMonster->new( $mech->cookie_jar );
 
 ## cookie\_jar
 
-A reader which returns an [HTTP::Cookies](https://metacpan.org/pod/HTTP%3A%3ACookies) object.
+A reader which returns an [HTTP::Cookies](https://metacpan.org/pod/HTTP::Cookies) object.
 
 ## all\_cookies
 
 Returns an ARRAY of all cookies in the cookie jar, represented as
-[HTTP::CookieMonster::Cookie](https://metacpan.org/pod/HTTP%3A%3ACookieMonster%3A%3ACookie) objects.
+[HTTP::CookieMonster::Cookie](https://metacpan.org/pod/HTTP::CookieMonster::Cookie) objects.
 
     my @cookies = $monster->all_cookies;
     foreach my $cookie ( @cookies ) {
@@ -141,7 +141,7 @@ Returns an ARRAY of all cookies in the cookie jar, represented as
 ## set\_cookie( $cookie )
 
 Sets a cookie and updates the cookie jar.  Requires a
-[HTTP::CookieMonster::Cookie](https://metacpan.org/pod/HTTP%3A%3ACookieMonster%3A%3ACookie) object.
+[HTTP::CookieMonster::Cookie](https://metacpan.org/pod/HTTP::CookieMonster::Cookie) object.
 
     my $monster = HTTP::CookieMonster->new( $mech->cookie_jar );
     my $s = $monster->get_cookie('session');
@@ -167,7 +167,7 @@ Sets a cookie and updates the cookie jar.  Requires a
 ## delete\_cookie( $cookie )
 
 Deletes a cookie and updates the cookie jar.  Requires a
-[HTTP::CookieMonster::Cookie](https://metacpan.org/pod/HTTP%3A%3ACookieMonster%3A%3ACookie) object.
+[HTTP::CookieMonster::Cookie](https://metacpan.org/pod/HTTP::CookieMonster::Cookie) object.
 
 ## get\_cookie( $name )
 
