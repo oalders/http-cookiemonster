@@ -154,7 +154,7 @@ sub _check_cookies {
     use WWW::Mechanize;
 
     my $mech = WWW::Mechanize->new;
-    my $url = 'http://www.nytimes.com';
+    my $url = 'https://www.nytimes.com';
     $mech->get( $url );
 
     my @cookies = cookies( $mech->cookie_jar );
