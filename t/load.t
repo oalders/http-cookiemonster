@@ -3,8 +3,8 @@
 use strict;
 use warnings;
 
-use HTTP::CookieMonster;
-use HTTP::Cookies ();
+use HTTP::CookieMonster ();
+use HTTP::Cookies       ();
 use Scalar::Util qw( reftype );
 use Test::More;
 
