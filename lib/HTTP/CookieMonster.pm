@@ -7,10 +7,9 @@ use 5.006;
 
 use Moo 1.000003;
 use Carp qw( croak );
-use HTTP::Cookies;
-use HTTP::CookieMonster::Cookie;
-use Safe::Isa;
-use Scalar::Util qw( reftype );
+use HTTP::Cookies ();
+use HTTP::CookieMonster::Cookie ();
+use Safe::Isa qw( $_isa );
 use Sub::Exporter -setup => { exports => ['cookies'] };
 use URI::Escape qw( uri_escape uri_unescape );
 
